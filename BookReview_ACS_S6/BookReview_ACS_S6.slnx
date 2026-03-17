@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="BL/BL.csproj" Id="38754aac-914a-41cf-a2d9-9c4066ed2313" />
+  <Project Path="BookReview_ACS_S6/BookReview_ACS_S6.csproj" />
+  <Project Path="CL/CL.csproj" Id="5a8ae6e7-057b-4b13-bb97-772ae20df5d2" />
+  <Project Path="DAL/DAL.csproj" Id="b49d8433-ae62-4cb8-b4fb-e09e52b5c5e8" />
+</Solution>
