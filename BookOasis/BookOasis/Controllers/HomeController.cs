@@ -1,8 +1,8 @@
-using BookReview_ACS_S6.Models;
+using BookOasis.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BookReview_ACS_S6.Controllers
+namespace BookOasis.Controllers
 {
     public class HomeController : Controller
     {

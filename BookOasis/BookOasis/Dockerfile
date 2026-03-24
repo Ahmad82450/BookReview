@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["BookReview_ACS_S6/BookReview_ACS_S6.csproj", "BookReview_ACS_S6/"]
-RUN dotnet restore "./BookReview_ACS_S6/BookReview_ACS_S6.csproj"
+COPY ["BookOasis/BookOasis.csproj", "BookOasis/"]
+RUN dotnet restore "./BookOasis/BookOasis.csproj"
 COPY . .
-WORKDIR "/src/BookReview_ACS_S6"
-RUN dotnet build "./BookReview_ACS_S6.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/BookOasis"
+RUN dotnet build "./BookOasis.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./BookReview_ACS_S6.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./BookOasis.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BookReview_ACS_S6.dll"]
+ENTRYPOINT ["dotnet", "BookOasis.dll"]

@@ -1,4 +1,4 @@
-namespace BookReview_ACS_S6.Models
+namespace BookOasis.Models
 {
     public class ErrorViewModel
     {
