@@ -1,8 +1,12 @@
 using BookOasis.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using BookOasis.Books;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<BookOasisContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BookOasisContext") ?? throw new InvalidOperationException("Connection string 'BookOasisContext' not found.")));
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
