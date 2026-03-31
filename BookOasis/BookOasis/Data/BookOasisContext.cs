@@ -14,6 +14,6 @@ namespace BookOasis.Books
         {
         }
 
-        public DbSet<BookOasis.Models.BooksDisplayModel> BooksDisplayModel { get; set; } = default!;
+        public DbSet<BookOasis.Models.BooksModel> BooksDisplayModel { get; set; } = default!;
     }
 }

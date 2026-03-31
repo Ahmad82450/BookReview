@@ -2,7 +2,7 @@
 
 namespace BookOasis.Models
 {
-    public class BooksDisplayModel
+    public class BooksModel
     {
         [Key]
         public int BookID { get; set; }

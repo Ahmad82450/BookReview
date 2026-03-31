@@ -55,7 +55,7 @@ namespace BookOasis.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookID,bookName,bookISBN,bookAuthor,bookDescription,bookReleaseDate")] BooksDisplayModel booksDisplayModel)
+        public async Task<IActionResult> Create([Bind("BookID,bookName,bookISBN,bookAuthor,bookDescription,bookReleaseDate")] BooksModel booksDisplayModel)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace BookOasis.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookID,bookName,bookISBN,bookAuthor,bookDescription,bookReleaseDate")] BooksDisplayModel booksDisplayModel)
+        public async Task<IActionResult> Edit(int id, [Bind("BookID,bookName,bookISBN,bookAuthor,bookDescription,bookReleaseDate")] BooksModel booksDisplayModel)
         {
             if (id != booksDisplayModel.BookID)
             {
