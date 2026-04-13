@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BookOasis.Books;
 using BookOasis.Models;
 using BookOasis.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookOasis.Controllers
 {
@@ -21,6 +21,7 @@ namespace BookOasis.Controllers
         }
 
         // GET: Books
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Books.ToListAsync());
