@@ -1,0 +1,101 @@
+﻿@model BookOasis.Models.BooksModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BooksDisplayModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.bookName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.bookName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.bookISBN)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.bookISBN)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.bookAuthor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.bookAuthor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.bookDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.bookDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.bookReleaseDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.bookReleaseDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.BookID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<h1>Reviews</h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="mb-4">
+        <h4>Add Review</h4>
+
+        <form asp-controller="Reviews" asp-action="Create" method="post">
+            <input type="hidden" name="BookID" value="@Model?.BookID" />
+            <input type="hidden" name="Book" value="@Model" />
+            <input type="hidden" name="UserID" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
+
+            <div class="form-group">
+                <label for="ReviewText">Review</label>
+                <textarea name="ReviewText" class="form-control" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ReviewRating">Rating (1-5)</label>
+                <input type="number" name="ReviewRating" class="form-control" min="1" max="5" required />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+}
+
+else
+{
+    <p>Log in to leave a reveiw</p>
+}
+
+
+<div>
+    @if (Model.Reviews != null && Model.Reviews.Any())
+    {
+        @foreach (var review in Model.Reviews)
+        {
+            <div class="border p-2 mb-2">
+                <p><strong>Rating:</strong> @review.ReviewRating</p>
+                <p>@review.ReviewText</p>
+                <p><small>@review.ReviewTimeStamp.ToString("g")</small></p>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No reviews available for this book.</p>
+    }
+</div>

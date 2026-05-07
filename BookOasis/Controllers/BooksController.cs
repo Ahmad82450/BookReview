@@ -42,6 +42,10 @@ namespace BookOasis.Controllers
                 return NotFound();
             }
 
+            var book = _context.Books
+                .Include(b => b.Reviews)
+                .FirstOrDefault(b => b.BookID == id);
+
             return View(booksDisplayModel);
         }
 

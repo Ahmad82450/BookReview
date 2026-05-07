@@ -12,5 +12,7 @@ namespace BookOasis.Data
         }
             
         public DbSet<BookOasis.Models.BooksModel> Books { get; set; }
+
+        public DbSet<BookOasis.Models.Reviews> Reviews { get; set; }
     }
 }
