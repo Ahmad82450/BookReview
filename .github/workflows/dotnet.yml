@@ -52,5 +52,6 @@ jobs:
       uses: advanced-security/codeql-summarize@v0.2.0
       with:
         language: csharp
+        project: BookOasis/BookOasis.csproj
         repository: ${{ github.repository }}
         token: ${{ github.token }}
