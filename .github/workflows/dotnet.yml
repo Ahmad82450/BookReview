@@ -47,11 +47,3 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:csharp"
-
-    - name: CodeQL Summarize
-      uses: advanced-security/codeql-summarize@v0.2.0
-      with:
-        language: csharp
-        project: BookOasis/BookOasis.csproj
-        repository: ${{ github.repository }}
-        token: ${{ github.token }}
