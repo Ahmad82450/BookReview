@@ -36,7 +36,7 @@ namespace BookOasis.Services
                         SecurityStamp = Guid.NewGuid().ToString()
                     };
 
-                    var result = await userManager.CreateAsync(adminUser, "Admin@123");
+                    var result = await userManager.CreateAsync(adminUser, "Rollthe6ice@Admin");
                     if (result.Succeeded) 
                     {
                         logger.LogInformation("Assigning Admin role to the admin user.");
