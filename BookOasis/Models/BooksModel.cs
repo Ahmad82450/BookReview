@@ -12,6 +12,6 @@ namespace BookOasis.Models
         public string bookDescription { get; set; }
         public DateTime bookReleaseDate { get; set; }
 
-        public ICollection<Reviews> Reviews { get; set; }
+        public ICollection<Reviews>? Reviews { get; set; }
     }
 }
