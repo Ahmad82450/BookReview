@@ -60,6 +60,7 @@ namespace BookOasis.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("BookID,bookName,bookISBN,bookAuthor,bookDescription,bookReleaseDate")] BooksModel booksDisplayModel)
         {
             if (ModelState.IsValid)
@@ -72,6 +73,7 @@ namespace BookOasis.Controllers
         }
 
         // GET: Books/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +94,7 @@ namespace BookOasis.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("BookID,bookName,bookISBN,bookAuthor,bookDescription,bookReleaseDate")] BooksModel booksDisplayModel)
         {
             if (id != booksDisplayModel.BookID)
@@ -123,6 +126,7 @@ namespace BookOasis.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,6 +147,7 @@ namespace BookOasis.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var booksDisplayModel = await _context.Books.FindAsync(id);
