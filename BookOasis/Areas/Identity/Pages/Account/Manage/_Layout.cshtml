@@ -1,0 +1,34 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<link rel="stylesheet" href="~/css/manage.css" />
+
+<div style="padding: 2rem 0 0;">
+    <h1 class="bo-page-title" style="font-family:'Playfair Display',Georgia,serif; font-size:2.2rem; font-weight:700; color:var(--ink); letter-spacing:-0.02em; margin-bottom:0.15em;">
+        Account Settings
+    </h1>
+    <p style="font-family:'Lora',Georgia,serif; font-size:0.78rem; font-style:italic; color:var(--ink-muted); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:2rem;">
+        Manage your BookOasis profile
+    </p>
+</div>
+
+<hr style="border:none; border-top:1px solid var(--border-soft); margin-bottom:2rem;" />
+
+<div class="bo-manage-layout">
+    <partial name="_ManageNav" />
+    <div class="bo-manage-content">
+        @RenderBody()
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

@@ -1,0 +1,77 @@
+﻿@page
+@model EnableAuthenticatorModel
+@{
+    ViewData["Title"] = "Configure Authenticator App";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<link rel="stylesheet" href="~/css/manage.css" />
+
+<h2 class="bo-manage-title">Configure Authenticator</h2>
+<p class="bo-manage-subtitle">Set up two-factor authentication</p>
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="bo-manage-card" style="max-width:680px;">
+    <p style="font-size:0.92rem; color:var(--ink-soft); line-height:1.75; margin-bottom:1.6rem;">
+        Follow the steps below to link your authenticator app to your BookOasis account.
+    </p>
+
+    <ol class="bo-steps">
+        <li>
+            <div class="bo-step-body">
+                <p>Download a two-factor authenticator app:</p>
+                <p>
+                    <strong>Microsoft Authenticator</strong> for
+                    <a href="https://go.microsoft.com/fwlink/?Linkid=825072" target="_blank">Android</a> and
+                    <a href="https://go.microsoft.com/fwlink/?Linkid=825073" target="_blank">iOS</a>
+                </p>
+                <p>
+                    <strong>Google Authenticator</strong> for
+                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en" target="_blank">Android</a> and
+                    <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8" target="_blank">iOS</a>
+                </p>
+            </div>
+        </li>
+
+        <li>
+            <div class="bo-step-body">
+                <p>
+                    Scan the QR code or manually enter the key
+                    <kbd class="bo-shared-key">@Model.SharedKey</kbd>
+                    into your authenticator app. Spaces and casing do not matter.
+                </p>
+                <div class="bo-alert-info">
+                    Learn how to <a href="https://go.microsoft.com/fwlink/?Linkid=852423" target="_blank">enable QR code generation</a>.
+                </div>
+                <div id="qrCode"></div>
+                <div id="qrCodeData" data-url="@Model.AuthenticatorUri"></div>
+            </div>
+        </li>
+
+        <li>
+            <div class="bo-step-body">
+                <p>
+                    Once you've scanned the QR code or entered the key, your authenticator app will display a 6-digit code.
+                    Enter it below to verify and activate 2FA.
+                </p>
+                <form id="send-code" method="post" class="bo-manage-form" style="max-width:300px;">
+                    <div class="form-floating">
+                        <input asp-for="Input.Code" class="form-control"
+                               autocomplete="off" placeholder="000000" />
+                        <label asp-for="Input.Code" class="form-label">Verification Code</label>
+                        <span asp-validation-for="Input.Code" class="text-danger"></span>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-2" role="alert"></div>
+                    <button type="submit" class="bo-btn-primary bo-btn-primary-full">
+                        Verify & Enable
+                    </button>
+                </form>
+            </div>
+        </li>
+    </ol>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

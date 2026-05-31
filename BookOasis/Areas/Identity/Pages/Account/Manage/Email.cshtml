@@ -1,0 +1,70 @@
+﻿@page
+@model EmailModel
+@{
+    ViewData["Title"] = "Manage Email";
+    ViewData["ActivePage"] = ManageNavPages.Email;
+}
+
+<link rel="stylesheet" href="~/css/manage.css" />
+
+<h2 class="bo-manage-title">Email Address</h2>
+<p class="bo-manage-subtitle">Update or verify your email</p>
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="bo-manage-card">
+    <form id="email-form" method="post" class="bo-manage-form">
+        <div asp-validation-summary="All" class="text-danger mb-3" role="alert"></div>
+
+        @if (Model.IsEmailConfirmed)
+        {
+            <!-- Confirmed email: read-only with verified badge -->
+            <div class="form-floating" style="position:relative; margin-bottom:1.3rem;">
+                <input asp-for="Email" class="form-control bo-filled" placeholder="Email" disabled
+                       style="padding-right:3rem;" />
+                <label asp-for="Email" class="form-label"></label>
+                <span title="Email confirmed" style="
+                position:absolute; right:0.85rem; top:50%; transform:translateY(-50%);
+                color:var(--forest); font-size:1rem; font-weight:700; pointer-events:none;">✓</span>
+            </div>
+        }
+        else
+        {
+            <!-- Unconfirmed email: show warning + resend link -->
+            <div class="form-floating" style="margin-bottom:0.5rem;">
+                <input asp-for="Email" class="form-control bo-filled" placeholder="Email" disabled />
+                <label asp-for="Email" class="form-label"></label>
+            </div>
+            <div class="bo-alert-warning" style="margin-bottom:1.3rem;">
+                Your email address is <strong>not yet confirmed.</strong>
+                <br />
+                <button id="email-verification" type="submit"
+                        asp-page-handler="SendVerificationEmail"
+                        style="background:none; border:none; padding:0; cursor:pointer;
+                    font-family:'Lora',Georgia,serif; font-size:0.85rem;
+                    font-style:italic; color:var(--rust); text-decoration:underline;
+                    margin-top:0.35rem;">
+                    Resend verification email →
+                </button>
+            </div>
+        }
+
+        <div class="form-floating">
+            <input asp-for="Input.NewEmail" class="form-control bo-filled"
+                   autocomplete="email" aria-required="true"
+                   placeholder="New email address" />
+            <label asp-for="Input.NewEmail" class="form-label"></label>
+            <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+        </div>
+
+        <button id="change-email-button" type="submit"
+                asp-page-handler="ChangeEmail"
+                class="bo-btn-primary bo-btn-primary-full">
+            Update Email Address
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

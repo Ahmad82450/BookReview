@@ -1,0 +1,41 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<link rel="stylesheet" href="~/css/manage.css" />
+
+<h2 class="bo-manage-title">Profile</h2>
+<p class="bo-manage-subtitle">Your account details</p>
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="bo-manage-card">
+    <form id="profile-form" method="post" class="bo-manage-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+        <div class="form-floating">
+            <input asp-for="Username" class="form-control"
+                   placeholder="Username" disabled />
+            <label asp-for="Username" class="form-label"></label>
+        </div>
+
+        <div class="form-floating">
+            <input asp-for="Input.PhoneNumber" class="form-control"
+                   placeholder="Phone number" />
+            <label asp-for="Input.PhoneNumber" class="form-label"></label>
+            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <button id="update-profile-button" type="submit"
+                class="bo-btn-primary bo-btn-primary-full">
+            Save Changes
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

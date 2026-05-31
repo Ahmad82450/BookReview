@@ -1,0 +1,37 @@
+﻿@page
+@model PersonalDataModel
+@{
+    ViewData["Title"] = "Personal Data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<link rel="stylesheet" href="~/css/manage.css" />
+
+<h2 class="bo-manage-title">Personal Data</h2>
+<p class="bo-manage-subtitle">Manage the data we hold about you</p>
+
+<div class="bo-manage-card">
+    <p style="font-size:0.92rem; color:var(--ink-soft); line-height:1.75; margin-bottom:0.8rem;">
+        Your account contains personal data that you have given us. This page allows you to download or delete that data.
+    </p>
+
+    <div class="bo-alert-warning">
+        <strong>Deleting this data will permanently remove your account — this cannot be undone.</strong>
+    </div>
+
+    <div class="bo-data-actions">
+        <form id="download-data" asp-page="DownloadPersonalData" method="post">
+            <button class="bo-btn-primary bo-btn-primary-full" type="submit">
+                ↓ Download My Data
+            </button>
+        </form>
+
+        <a id="delete" asp-page="DeletePersonalData" class="bo-btn-danger bo-btn-danger-full" style="text-align:center;">
+            Delete My Account
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
