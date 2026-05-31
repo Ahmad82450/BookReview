@@ -44,20 +44,58 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddRateLimiter(options =>
 {
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
-        RateLimitPartition.GetFixedWindowLimiter(
-            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
-            factory: partition => new FixedWindowRateLimiterOptions
+    {
+        // Exclude static assets from rate limiting
+        var path = httpContext.Request.Path.Value ?? "";
+        if (path.StartsWith("/css") || path.StartsWith("/js") ||
+            path.StartsWith("/lib") || path.StartsWith("/images"))
+        {
+            return RateLimitPartition.GetNoLimiter<string>("static");
+        }
+
+        bool isAuthenticated = httpContext.User.Identity?.IsAuthenticated ?? false;
+
+        // Authenticated users get a higher limit keyed by username
+        if (isAuthenticated)
+        {
+            return RateLimitPartition.GetSlidingWindowLimiter(
+                partitionKey: httpContext.User.Identity!.Name!,
+                factory: _ => new SlidingWindowRateLimiterOptions
+                {
+                    AutoReplenishment = true,
+                    PermitLimit = 100,
+                    SegmentsPerWindow = 4,
+                    Window = TimeSpan.FromMinutes(1),
+                    QueueLimit = 0
+                });
+        }
+
+        // Anonymous users get a lower limit keyed by IP
+        return RateLimitPartition.GetSlidingWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new SlidingWindowRateLimiterOptions
             {
                 AutoReplenishment = true,
-                PermitLimit = 150,
-                QueueLimit = 0,
-                Window = TimeSpan.FromMinutes(1)
-            }));
+                PermitLimit = 60,
+                SegmentsPerWindow = 4,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            });
+    });
 
     options.OnRejected = async (context, cancellationToken) =>
     {
         context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-        await context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.", cancellationToken);
+
+        // Tell the client how long to wait before retrying
+        if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+        {
+            context.HttpContext.Response.Headers.RetryAfter =
+                ((int)retryAfter.TotalSeconds).ToString();
+        }
+
+        await context.HttpContext.Response.WriteAsync(
+            "Too many requests. Please try again later.", cancellationToken);
     };
 });
 
@@ -115,7 +153,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Books}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.MapRazorPages()

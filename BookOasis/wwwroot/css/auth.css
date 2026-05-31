@@ -1,0 +1,478 @@
+/* ============================================================
+   BookOasis – Identity / Authentication Stylesheet
+   Shared variables & fonts from books.css are assumed available.
+   This file can be used standalone or alongside books.css.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* ── Variables (mirrors books.css; safe to include twice) ── */
+:root {
+    --cream:        #f7f3eb;
+    --parchment:    #ede5d0;
+    --ink:          #1c1008;
+    --ink-soft:     #3d2f1e;
+    --ink-muted:    #7a6a55;
+    --rust:         #9b3a1a;
+    --rust-light:   #c4501f;
+    --gold:         #b8882a;
+    --gold-light:   #d4a94a;
+    --forest:       #2a4a32;
+    --border:       #c9b89a;
+    --border-soft:  #ddd0b8;
+    --shadow:       rgba(28, 16, 8, 0.12);
+    --shadow-md:    rgba(28, 16, 8, 0.22);
+}
+
+/* ── Auth page layout ── */
+.bo-auth-wrapper {
+    min-height: 70vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 1rem 4rem;
+}
+
+.bo-auth-panel {
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    box-shadow: 0 4px 28px var(--shadow-md);
+    padding: 2.8rem 3rem;
+    width: 100%;
+    max-width: 460px;
+}
+
+/* Two-column layout (Login / Register with external providers) */
+.bo-auth-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0 2.4rem;
+    max-width: 860px;
+    width: 100%;
+    align-items: start;
+}
+
+.bo-auth-divider-col {
+    background: var(--border-soft);
+    align-self: stretch;
+    margin: 0.5rem 0;
+}
+
+/* ── Ornament / logo mark above form ── */
+.bo-auth-ornament {
+    text-align: center;
+    margin-bottom: 1.6rem;
+}
+
+.bo-auth-ornament .bo-auth-mark {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+}
+
+.bo-auth-ornament .bo-auth-mark::before,
+.bo-auth-ornament .bo-auth-mark::after {
+    content: ' ⸻ ';
+    color: var(--border);
+    font-style: normal;
+}
+
+/* ── Page title inside panel ── */
+.bo-auth-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: center;
+    margin: 0 0 0.2rem;
+    line-height: 1.2;
+}
+
+.bo-auth-subtitle {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.8rem;
+}
+
+.bo-auth-hr {
+    border: none;
+    border-top: 1px solid var(--border-soft);
+    margin: 0 0 1.8rem;
+}
+
+/* ── Section heading (external logins column) ── */
+.bo-auth-section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+}
+
+.bo-auth-section-note {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-bottom: 1.2rem;
+}
+
+/* ── Form fields ── */
+.bo-auth-form .form-group,
+.bo-auth-form .bo-field {
+    margin-bottom: 1.3rem;
+    position: relative;
+}
+
+/* Floating label override for Identity's form-floating pattern */
+.bo-auth-form .form-floating {
+    position: relative;
+    margin-bottom: 1.3rem;
+}
+
+.bo-auth-form .form-floating .form-control {
+    height: 3.4rem;
+    padding: 1rem 0.85rem 0.4rem;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--ink-soft);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.bo-auth-form .form-floating .form-control:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184, 136, 42, 0.18);
+    outline: none;
+    background: #fff;
+}
+
+.bo-auth-form .form-floating label {
+    position: absolute;
+    top: 50%;
+    left: 0.85rem;
+    transform: translateY(-50%);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    pointer-events: none;
+    transition: top 0.15s, font-size 0.15s, color 0.15s;
+}
+
+.bo-auth-form .form-floating .form-control:focus ~ label,
+.bo-auth-form .form-floating .form-control:not(:placeholder-shown) ~ label {
+    top: 0.6rem;
+    font-size: 0.68rem;
+    color: var(--gold);
+    transform: none;
+}
+
+/* Non-floating plain fields (ForgotPassword uses old pattern) */
+.bo-auth-form .bo-plain-label {
+    display: block;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.35rem;
+}
+
+.bo-auth-form .bo-plain-input {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--ink-soft);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.96rem;
+    padding: 0.55rem 0.85rem;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.bo-auth-form .bo-plain-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184, 136, 42, 0.18);
+    outline: none;
+    background: #fff;
+}
+
+/* Remember me checkbox */
+.bo-auth-form .bo-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.4rem;
+}
+
+.bo-auth-form .bo-checkbox-row input[type="checkbox"] {
+    accent-color: var(--forest);
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+}
+
+.bo-auth-form .bo-checkbox-row label {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    cursor: pointer;
+}
+
+/* ── Buttons ── */
+.bo-auth-btn {
+    display: block;
+    width: 100%;
+    padding: 0.7rem 1.2rem;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    text-align: center;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    text-decoration: none;
+}
+
+.bo-auth-btn:active { transform: translateY(1px); }
+
+.bo-auth-btn-primary {
+    background: var(--forest);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(42, 74, 50, 0.28);
+    margin-top: 0.4rem;
+}
+
+.bo-auth-btn-primary:hover {
+    background: #1e3826;
+    box-shadow: 0 4px 14px rgba(42, 74, 50, 0.36);
+    color: #fff;
+}
+
+.bo-auth-btn-external {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.7rem;
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--ink-soft);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.bo-auth-btn-external:hover {
+    background: var(--cream);
+    border-color: var(--gold);
+}
+
+/* ── Auth links below form ── */
+.bo-auth-links {
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    text-align: center;
+}
+
+.bo-auth-links a {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.bo-auth-links a:hover {
+    color: var(--rust-light);
+}
+
+/* ── Status / info message ── */
+.bo-auth-status {
+    background: #f0f7f1;
+    border: 1px solid #bdd8c4;
+    border-left: 4px solid var(--forest);
+    border-radius: 3px;
+    padding: 0.85rem 1.1rem;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.88rem;
+    color: var(--forest);
+    font-style: italic;
+    margin-bottom: 1.4rem;
+}
+
+/* ── Access Denied panel ── */
+.bo-denied-panel {
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 480px;
+    margin: 4rem auto;
+}
+
+.bo-denied-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--border);
+}
+
+.bo-denied-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--rust);
+    margin-bottom: 0.5rem;
+}
+
+.bo-denied-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--rust);
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+.bo-denied-msg {
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    margin-top: 1rem;
+}
+
+.bo-denied-link {
+    display: inline-block;
+    margin-top: 1.8rem;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--forest);
+    text-decoration: none;
+    border: 1px solid var(--forest);
+    padding: 0.45rem 1.4rem;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.bo-denied-link:hover {
+    background: var(--forest);
+    color: #fff;
+}
+
+/* ── Logout page ── */
+.bo-logout-panel {
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.bo-logout-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+}
+
+.bo-logout-msg {
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.6rem;
+}
+
+/* ── Confirmation pages (ForgotPasswordConfirmation, ConfirmEmail) ── */
+.bo-confirm-panel {
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 480px;
+    margin: 3rem auto;
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    box-shadow: 0 2px 16px var(--shadow);
+}
+
+.bo-confirm-icon {
+    font-size: 2.6rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+}
+
+.bo-confirm-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1rem;
+}
+
+.bo-confirm-msg {
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.bo-confirm-link {
+    display: inline-block;
+    margin-top: 1.6rem;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--forest);
+    text-decoration: none;
+    border: 1px solid var(--forest);
+    padding: 0.45rem 1.4rem;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.bo-confirm-link:hover {
+    background: var(--forest);
+    color: #fff;
+}
+
+/* ── Validation ── */
+.text-danger {
+    font-size: 0.78rem;
+    color: var(--rust) !important;
+    font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+    .bo-auth-two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .bo-auth-divider-col {
+        display: none;
+    }
+
+    .bo-auth-panel {
+        padding: 2rem 1.4rem;
+    }
+}
