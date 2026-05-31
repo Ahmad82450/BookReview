@@ -1,21 +1,31 @@
 ﻿@page
 @model LogoutModel
 @{
-    ViewData["Title"] = "Log out";
+    ViewData["Title"] = "Log Out";
 }
 
-<header>
-    <h1>@ViewData["Title"]</h1>
-    @{
-        if (User.Identity?.IsAuthenticated ?? false)
+<link rel="stylesheet" href="~/css/auth.css" />
+
+<div class="bo-auth-wrapper">
+    <div class="bo-logout-panel">
+        @if (User.Identity?.IsAuthenticated ?? false)
         {
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+            <h1 class="bo-logout-title">Leaving so soon?</h1>
+            <p class="bo-logout-msg">Click below to securely sign out of your account.</p>
+            <form asp-area="Identity" asp-page="/Account/Logout"
+                  asp-route-returnUrl="@Url.Page("/", new { area = "" })"
+                  method="post">
+                <button type="submit" class="bo-auth-btn bo-auth-btn-primary" style="max-width:240px; margin:0 auto;">
+                    Sign Out
+                </button>
             </form>
         }
         else
         {
-            <p>You have successfully logged out of the application.</p>
+            <div class="bo-confirm-icon">👋</div>
+            <h1 class="bo-logout-title">Goodbye!</h1>
+            <p class="bo-logout-msg">You have been successfully signed out of BookOasis.</p>
+            <a asp-page="/Account/Login" class="bo-confirm-link">Sign back in</a>
         }
-    }
-</header>
+    </div>
+</div>

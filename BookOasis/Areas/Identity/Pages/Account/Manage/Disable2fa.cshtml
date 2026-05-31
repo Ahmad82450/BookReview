@@ -1,0 +1,26 @@
+﻿@page
+@model Disable2faModel
+@{
+    ViewData["Title"] = "Disable Two-Factor Authentication";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<link rel="stylesheet" href="~/css/manage.css" />
+
+<h2 class="bo-manage-title">Disable 2FA</h2>
+<p class="bo-manage-subtitle">Remove two-factor authentication from your account</p>
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="bo-manage-card">
+    <div class="bo-alert-warning">
+        <strong>This action only disables 2FA.</strong>
+        <br /><br />
+        Disabling 2FA does not change the keys stored in your authenticator app. If you also wish to change those keys,
+        you should <a asp-page="./ResetAuthenticator">reset your authenticator keys</a> separately.
+    </div>
+
+    <form method="post">
+        <button class="bo-btn-danger" type="submit">Disable 2FA</button>
+    </form>
+</div>

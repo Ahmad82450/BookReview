@@ -1,0 +1,431 @@
+/* ============================================================
+   BookOasis – Books Controller Stylesheet
+   Aesthetic: Warm editorial / antiquarian library
+   Fonts: Playfair Display (headings) + Lora (body)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+    --cream:        #f7f3eb;
+    --parchment:    #ede5d0;
+    --ink:          #1c1008;
+    --ink-soft:     #3d2f1e;
+    --ink-muted:    #7a6a55;
+    --rust:         #9b3a1a;
+    --rust-light:   #c4501f;
+    --gold:         #b8882a;
+    --gold-light:   #d4a94a;
+    --forest:       #2a4a32;
+    --border:       #c9b89a;
+    --border-soft:  #ddd0b8;
+    --shadow:       rgba(28, 16, 8, 0.12);
+    --shadow-md:    rgba(28, 16, 8, 0.22);
+}
+
+/* ── Base ── */
+body {
+    background-color: var(--cream);
+    color: var(--ink-soft);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+/* ── Page Titles ── */
+.bo-page-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.15em;
+    line-height: 1.15;
+}
+
+.bo-page-title::after {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 3px;
+    background: var(--gold);
+    margin-top: 0.4em;
+    border-radius: 2px;
+}
+
+.bo-subtitle {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.6rem;
+}
+
+/* ── Divider ── */
+.bo-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0 2rem;
+}
+
+/* ── Card wrapper ── */
+.bo-card {
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    padding: 2.4rem 2.8rem;
+    box-shadow: 0 2px 16px var(--shadow);
+    max-width: 560px;
+}
+
+/* ── Form ── */
+.bo-form .form-group {
+    margin-bottom: 1.4rem;
+}
+
+.bo-form label.control-label {
+    display: block;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.35rem;
+}
+
+.bo-form .form-control {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--ink-soft);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.96rem;
+    padding: 0.55rem 0.85rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.bo-form .form-control:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184, 136, 42, 0.18);
+    outline: none;
+    background: #fff;
+}
+
+.bo-form textarea.form-control {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* ── Buttons ── */
+.bo-btn {
+    display: inline-block;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    padding: 0.55rem 1.6rem;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+.bo-btn:active {
+    transform: translateY(1px);
+}
+
+.bo-btn-primary {
+    background: var(--forest);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(42, 74, 50, 0.3);
+}
+
+.bo-btn-primary:hover {
+    background: #1e3826;
+    box-shadow: 0 4px 12px rgba(42, 74, 50, 0.35);
+    color: #fff;
+}
+
+.bo-btn-danger {
+    background: var(--rust);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(155, 58, 26, 0.3);
+}
+
+.bo-btn-danger:hover {
+    background: #7a2c12;
+    box-shadow: 0 4px 12px rgba(155, 58, 26, 0.35);
+    color: #fff;
+}
+
+/* ── Back link ── */
+.bo-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-decoration: none;
+    margin-top: 1.6rem;
+    transition: color 0.2s;
+}
+
+.bo-back-link::before {
+    content: '←';
+    font-style: normal;
+}
+
+.bo-back-link:hover {
+    color: var(--rust-light);
+}
+
+/* ── Detail list (Details / Delete pages) ── */
+.bo-detail-list {
+    margin: 0;
+}
+
+.bo-detail-list dt {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    padding-top: 0.9rem;
+}
+
+.bo-detail-list dd {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--border-soft);
+    margin-left: 0;
+}
+
+.bo-detail-list dd:last-child {
+    border-bottom: none;
+}
+
+/* ── Delete warning panel ── */
+.bo-delete-warning {
+    background: #fff5f2;
+    border: 1px solid #e8c5bb;
+    border-left: 4px solid var(--rust);
+    border-radius: 4px;
+    padding: 1rem 1.4rem;
+    margin-bottom: 1.8rem;
+    font-style: italic;
+    color: var(--rust);
+    font-size: 0.95rem;
+}
+
+/* ── Index Table ── */
+.bo-table-wrapper {
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    box-shadow: 0 2px 16px var(--shadow);
+    overflow: hidden;
+}
+
+.bo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+}
+
+.bo-table thead {
+    background: var(--ink);
+}
+
+.bo-table thead th {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.72rem;
+    font-style: italic;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--parchment);
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border: none;
+}
+
+.bo-table tbody tr {
+    border-bottom: 1px solid var(--border-soft);
+    transition: background 0.15s;
+}
+
+.bo-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.bo-table tbody tr:hover {
+    background: var(--cream);
+}
+
+.bo-table tbody td {
+    padding: 0.85rem 1.2rem;
+    color: var(--ink-soft);
+    vertical-align: middle;
+}
+
+.bo-table .bo-actions {
+    white-space: nowrap;
+    text-align: right;
+}
+
+.bo-table .bo-actions a {
+    font-size: 0.8rem;
+    font-style: italic;
+    text-decoration: none;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.bo-table .bo-actions a.action-edit {
+    color: var(--forest);
+}
+
+.bo-table .bo-actions a.action-edit:hover {
+    background: rgba(42, 74, 50, 0.1);
+}
+
+.bo-table .bo-actions a.action-delete {
+    color: var(--rust);
+}
+
+.bo-table .bo-actions a.action-delete:hover {
+    background: rgba(155, 58, 26, 0.1);
+}
+
+.bo-table .bo-actions a.action-details {
+    color: var(--gold);
+}
+
+.bo-table .bo-actions a.action-details:hover {
+    background: rgba(184, 136, 42, 0.1);
+}
+
+.bo-table .bo-actions .pipe {
+    color: var(--border);
+    margin: 0 0.1rem;
+}
+
+/* ── Create New button on Index ── */
+.bo-create-btn {
+    display: inline-block;
+    margin-bottom: 1.6rem;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--forest);
+    text-decoration: none;
+    border: 1px solid var(--forest);
+    padding: 0.45rem 1.2rem;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.bo-create-btn:hover {
+    background: var(--forest);
+    color: #fff;
+}
+
+/* ── Reviews section ── */
+.bo-reviews-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 2.8rem 0 0.8rem;
+}
+
+.bo-review-form-card {
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    padding: 1.6rem 2rem;
+    box-shadow: 0 2px 10px var(--shadow);
+    max-width: 620px;
+    margin-bottom: 2rem;
+}
+
+.bo-review-form-card h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1rem;
+}
+
+.bo-review-card {
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 1.2rem 1.6rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 6px var(--shadow);
+    max-width: 720px;
+}
+
+.bo-review-card .bo-review-rating {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+}
+
+.bo-review-card .bo-review-text {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+}
+
+.bo-review-card .bo-review-ts {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--ink-muted);
+}
+
+.bo-star {
+    color: var(--gold-light);
+}
+
+.bo-login-prompt {
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+}
+
+.bo-no-reviews {
+    font-style: italic;
+    color: var(--ink-muted);
+}
+
+/* ── Action row beneath detail cards ── */
+.bo-action-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.8rem;
+}
+
+/* ── Validation ── */
+.text-danger {
+    font-size: 0.8rem;
+    color: var(--rust) !important;
+    font-style: italic;
+}

@@ -1,8 +1,18 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Confirm Email";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<link rel="stylesheet" href="~/css/auth.css" />
+
+<div class="bo-confirm-panel">
+    <div class="bo-confirm-icon">✉️</div>
+    <h1 class="bo-confirm-title">Email Confirmed</h1>
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    <p class="bo-confirm-msg">
+        Your email address has been verified.<br />
+        You may now log in to your BookOasis account.
+    </p>
+    <a asp-page="/Account/Login" class="bo-confirm-link">Log in</a>
+</div>

@@ -1,0 +1,26 @@
+﻿@page
+@model DownloadPersonalDataModel
+@{
+    ViewData["Title"] = "Download Your Data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<link rel="stylesheet" href="~/css/manage.css" />
+
+<h2 class="bo-manage-title">Download Your Data</h2>
+<p class="bo-manage-subtitle">Your personal information export</p>
+
+<div class="bo-manage-card">
+    <p style="font-size:0.92rem; color:var(--ink-soft); line-height:1.75; margin-bottom:1.4rem;">
+        Your data export will be prepared and downloaded as a <code>PersonalData.json</code> file.
+        This file contains all personal information associated with your account.
+    </p>
+
+    <form method="post">
+        <button type="submit" class="bo-btn-primary">↓ Download</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
