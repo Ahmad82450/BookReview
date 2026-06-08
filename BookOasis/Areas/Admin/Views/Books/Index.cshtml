@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BookOasis.Models.BooksModel>
+@{
+    ViewData["Title"] = "Manage Books";
+    Layout = "_AdminLayout";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">All Books (@Model.Count())</h4>
+    <a asp-area="" asp-controller="Books" asp-action="Create"
+       class="btn btn-primary btn-sm">+ Add New Book</a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                    <th>Release Date</th>
+                    <th>Reviews</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td class="text-muted">@book.BookID</td>
+                        <td><strong>@book.bookName</strong></td>
+                        <td>@book.bookAuthor</td>
+                        <td class="text-muted small font-monospace">@book.bookISBN</td>
+                        <td class="text-muted small">
+                            @book.bookReleaseDate.ToString("dd MMM yyyy")
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">
+                                @(book.Reviews?.Count ?? 0)
+                            </span>
+                        </td>
+                        <td>
+                            <a asp-area="" asp-controller="Books" asp-action="Edit"
+                               asp-route-id="@book.BookID"
+                               class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <form asp-area="Admin" asp-controller="Books"
+                                  asp-action="Delete" method="post" class="d-inline"
+                                  onsubmit="return confirm('Delete this book?')">
+                                <input type="hidden" name="id" value="@book.BookID" />
+                                <button class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

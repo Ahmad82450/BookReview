@@ -1,0 +1,68 @@
+﻿@model IEnumerable<BookOasis.Models.Reviews>
+@{
+    ViewData["Title"] = "Manage Reviews";
+    Layout = "_AdminLayout";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">All Reviews (@Model.Count())</h4>
+    <span class="text-muted small">Showing most recent first</span>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Book</th>
+                    <th>User ID</th>
+                    <th>Rating</th>
+                    <th>Review</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var review in Model)
+                {
+                    <tr>
+                        <td class="text-muted">@review.ReviewID</td>
+                        <td>
+                            <strong>@(review.Book?.bookName ?? "Unknown")</strong>
+                            <div class="text-muted small">ISBN: @(review.Book?.bookISBN ?? "-")</div>
+                        </td>
+                        <td>
+                            <span class="text-muted small font-monospace">
+                                @review.UserID.Substring(0, Math.Min(8, review.UserID.Length))...
+                            </span>
+                        </td>
+                        <td>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <span style="color: @(i <= review.ReviewRating ? "#F4A700" : "#CCC");">★</span>
+                            }
+                            <span class="text-muted small">(@review.ReviewRating)</span>
+                        </td>
+                        <td style="max-width: 280px;">
+                            <div class="text-truncate" title="@review.ReviewText">
+                                @review.ReviewText
+                            </div>
+                        </td>
+                        <td class="text-muted small text-nowrap">
+                            @review.ReviewTimeStamp.ToString("dd MMM yyyy")
+                        </td>
+                        <td>
+                            <form asp-area="Admin" asp-controller="Reviews"
+                                  asp-action="Delete" method="post" class="d-inline"
+                                  onsubmit="return confirm('Delete this review?')">
+                                <input type="hidden" name="id" value="@review.ReviewID" />
+                                <button class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
