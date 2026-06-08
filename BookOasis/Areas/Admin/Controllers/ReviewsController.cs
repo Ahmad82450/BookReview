@@ -24,6 +24,7 @@ namespace BookOasis.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             var review = await _context.Reviews.FindAsync(id);
