@@ -26,6 +26,7 @@ namespace BookOasis.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ToggleAdmin(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -40,6 +41,7 @@ namespace BookOasis.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ToggleLock(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
