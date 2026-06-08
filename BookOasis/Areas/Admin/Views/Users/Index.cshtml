@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BookOasis.Models.Users>
+@{
+    ViewData["Title"] = "Users";
+    var userRoles = ViewBag.UserRoles as Dictionary<string, IList<string>> ?? new Dictionary<string, IList<string>>();
+}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-bold">All Users (@Model.Count())</div>
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Locked</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    var roles = userRoles[user.Id];
+                    var isLocked = user.LockoutEnd.HasValue &&
+                                   user.LockoutEnd > DateTimeOffset.UtcNow;
+                    <tr>
+                        <td>@user.Email</td>
+                        <td>
+                            @foreach (var role in roles)
+                            {
+                                <span class="badge bg-primary">@role</span>
+                            }
+                        </td>
+                        <td>
+                            @if (isLocked)
+                            {
+                                <span class="badge bg-danger">Locked</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                        </td>
+                        <td>
+                            <form asp-action="ToggleAdmin" method="post" class="d-inline">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    @(roles.Contains("Admin") ? "Remove Admin" : "Make Admin")
+                                </button>
+                            </form>
+                            <form asp-action="ToggleLock" method="post" class="d-inline">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <button class="btn btn-sm @(isLocked ? "btn-outline-success" : "btn-outline-danger")">
+                                    @(isLocked ? "Unlock" : "Lock")
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

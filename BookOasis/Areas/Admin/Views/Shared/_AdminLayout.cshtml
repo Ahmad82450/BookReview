@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — BookOasis Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+            body { display: flex; min-height: 100vh; }
+            .sidebar {
+                width: 240px; background: #1F3864; color: white;
+                display: flex; flex-direction: column; padding: 20px 0; min-height: 100vh;
+            }
+            .sidebar .brand { padding: 0 20px 20px; font-size: 1.2rem;
+                font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.2); }
+            .sidebar a { color: rgba(255,255,255,0.8); display: block;
+                padding: 10px 20px; text-decoration: none; }
+            .sidebar a:hover, .sidebar a.active { background: rgba(255,255,255,0.15);
+                color: white; }
+            .sidebar .nav-label { padding: 16px 20px 4px;
+                font-size: 0.7rem; text-transform: uppercase;
+                opacity: 0.5; letter-spacing: 1px; }
+            .main-content { flex: 1; background: #F8F9FA; }
+            .top-bar { background: white; border-bottom: 1px solid #dee2e6;
+                padding: 12px 24px; display: flex;
+                justify-content: space-between; align-items: center; }
+            .content-area { padding: 24px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="brand">BookOasis Admin</div>
+        <div class="nav-label">Overview</div>
+        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+        <div class="nav-label">Management</div>
+        <a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
+        <a asp-area="Admin" asp-controller="Books" asp-action="Index">Books</a>
+        <a asp-area="Admin" asp-controller="Reviews" asp-action="Index">Reviews</a>
+        <div class="nav-label">System</div>
+        <a asp-area="" asp-controller="Home" asp-action="Index">Back to Site</a>
+    </div>
+    <div class="main-content">
+        <div class="top-bar">
+            <span>@ViewData["Title"]</span>
+            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Sign out</button>
+            </form>
+        </div>
+        <div class="content-area">
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
