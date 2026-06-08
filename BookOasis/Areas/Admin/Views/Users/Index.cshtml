@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BookOasis.Models.Users>
 @{
     ViewData["Title"] = "Users";
-    var userRoles = ViewBag.UserRoles as Dictionary<string, IList<string>>;
+    var userRoles = ViewBag.UserRoles as Dictionary<string, IList<string>> ?? new Dictionary<string, IList<string>>();
 }
 
 <div class="card border-0 shadow-sm">
